@@ -8,19 +8,23 @@ const input = document.getElementById("todoinput")! as HTMLInputElement;
 const form = document.querySelector("form")!;
 const list = document.getElementById("todolist")!;
 
+// created a data structure for local storage
 const todos: Todo[] = readTodos();
 todos.forEach(createTodo);
 
+// return contents of local storage
 function readTodos(): Todo[] {
     const todosJSON = localStorage.getItem("todos");
     if (todosJSON === null) return [];
     return JSON.parse(todosJSON);
 }
 
+// update local storage
 function saveTodos() {
     localStorage.setItem("todos", JSON.stringify(todos));
 }
 
+// creates todo and adds to local storage, clears input
 function handleSubmit(e: SubmitEvent) {
     e.preventDefault();
     const newTodo: Todo = {
@@ -34,6 +38,7 @@ function handleSubmit(e: SubmitEvent) {
     input.value = "";
 }
 
+// adds todo to DOM
 function createTodo(todo: Todo) {
     const newLI = document.createElement("li");
     const checkbox = document.createElement("input");
@@ -49,8 +54,3 @@ function createTodo(todo: Todo) {
 }
 
 form.addEventListener("submit", handleSubmit);
-
-// form.addEventListener("submit", function (e) {
-//   e.preventDefault();
-//   console.log("submitted");
-// });
